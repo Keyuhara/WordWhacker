@@ -16,11 +16,11 @@ public class HighscoreTable : MonoBehaviour
         // Deactivate the entry template object
         entryTemplate.gameObject.SetActive(false);
 
-        string jsonString=PlayerPrefs.GetString("highscoreTable");
+        string jsonString = PlayerPrefs.GetString("highscoreTable");
 
-        Highscores highscores=JsonUtility.FromJson<Highscores>(jsonString);
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
         
-        if (highscores == null)
+        if(highscores == null)
         {
             // There's no stored table, initialize
             Debug.Log("Initializing table with default values...");
@@ -54,7 +54,7 @@ public class HighscoreTable : MonoBehaviour
         
         highscoreEntryTransformList = new List<Transform>();
 
-        foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
+        foreach(HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
         {
             CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
         }
@@ -102,7 +102,7 @@ public class HighscoreTable : MonoBehaviour
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
-        if (highscores == null)
+        if(highscores == null)
         {
             // There's no stored table, initialize
             highscores = new Highscores() 

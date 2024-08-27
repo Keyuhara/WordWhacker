@@ -16,10 +16,11 @@ public class AccountManagerBehaviour : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            accountFilePath = Path.Combine(Application.persistentDataPath, "accounts.json");
-            Debug.Log("Account File Path: " + accountFilePath);
+            // accountFilePath = Path.Combine(Application.persistentDataPath, "accounts.json");
+            // Debug.Log("Account File Path: " + accountFilePath);
             AccountManager = new AccountManager();
-            AccountManager.LoadAccountsFromFile(accountFilePath);
+            AccountManager.LoadAccountsFromFile();
+            // AccountManager.LoadAccountsFromFile(accountFilePath);
         }
         else
         {
@@ -29,6 +30,6 @@ public class AccountManagerBehaviour : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        AccountManager.SaveAccountsToFile(accountFilePath);
+        // AccountManager.SaveAccountsToFile(accountFilePath);
     }
 }

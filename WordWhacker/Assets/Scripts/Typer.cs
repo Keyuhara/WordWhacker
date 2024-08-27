@@ -109,7 +109,7 @@ public class Typer : MonoBehaviour
             TMP_Text textComponent = enemyObject.transform.GetChild(0).GetComponent<TMP_Text>();
 
             // Check if the text matches the typed string
-            if (textComponent.text.StartsWith(typedWord + letter))
+            if(textComponent.text.StartsWith(typedWord + letter))
             {
                 // Debug.Log("Match found");
                 return true;
@@ -129,7 +129,7 @@ public class Typer : MonoBehaviour
     // Delete letter from user typed buffer
     private void RemoveLetter()
     {
-        if (typedWord.Length > 0)
+        if(typedWord.Length > 0)
         {
             typedWord = typedWord.Remove(typedWord.Length - 1);
             wordOutput.text = typedWord;
@@ -147,7 +147,7 @@ public class Typer : MonoBehaviour
             TMP_Text textComponent = enemyObject.transform.GetChild(0).GetComponent<TMP_Text>();
 
             // Check if the text matches the typed string
-            if (textComponent.text == typedWord)
+            if(textComponent.text == typedWord)
             {
                 Debug.Log("Destroy Word");
                 // player.IncrementPoints(5);

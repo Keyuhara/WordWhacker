@@ -23,10 +23,10 @@ public class Account
     {
 
     }
-    
+
     public Account(string username, string password, bool isA = false)
     {
-        if (string.IsNullOrWhiteSpace(username))
+        if(string.IsNullOrWhiteSpace(username))
         {
             throw new ArgumentException("Username cannot be null or empty.", nameof(username));
         }
@@ -49,12 +49,12 @@ public class Account
 
     private byte[] HashPassword(string password, byte[] salt)
     {
-        if (string.IsNullOrEmpty(password))
+        if(string.IsNullOrEmpty(password))
         {
             throw new ArgumentException("Password cannot be null or empty.", nameof(password));
         }
 
-        if (salt == null || salt.Length == 0)
+        if(salt == null || salt.Length == 0)
         {
             throw new ArgumentException("Salt cannot be null or empty.", nameof(salt));
         }
@@ -94,11 +94,11 @@ public class Account
 
     private bool CompareByteArrays(byte[] array1, byte[] array2)
     {
-        if (array1.Length != array2.Length)
+        if(array1.Length != array2.Length)
             return false;
 
-        for (int i = 0; i < array1.Length; i++)
-            if (array1[i] != array2[i])
+        for(int i = 0; i < array1.Length; i++)
+            if(array1[i] != array2[i])
                 return false;
 
         return true;
@@ -114,57 +114,58 @@ public class AccountManager
         accounts = new List<Account>();
     }
 
-    public void LoadAccountsFromFile(string filePath)
+    public void LoadAccountsFromFile()//string filePath)
     {
-        Debug.Log("Attempting to load accounts from: " + filePath);
-        if (File.Exists(filePath))
+        // Debug.Log("Attempting to load accounts from: " + filePath);
+        // if(File.Exists(filePath))
+        if(false) // intentionally unreachable; skip json and file path
         {
-            try
-            {
-                string json;
-                using (var reader = new StreamReader(filePath))
-                {
-                    json = reader.ReadToEnd();
-                }
+            // try
+            // {
+            //     string json;
+            //     using (var reader = new StreamReader(filePath))
+            //     {
+            //         json = reader.ReadToEnd();
+            //     }
 
-                Debug.Log("Read json: " + json.Substring(0, Math.Min(json.Length, 200)));
+            //     Debug.Log("Read json: " + json.Substring(0, Math.Min(json.Length, 200)));
 
-                if (string.IsNullOrEmpty(json))
-                {
-                    Debug.LogWarning("Account file is empty or null, initializing new list.");
-                    accounts = new List<Account>();
-                }
-                else
-                {
-                    JsonSerializerSettings settings = new JsonSerializerSettings
-                    {
-                        Converters = new List<JsonConverter> { new ByteArrayConverter() }
-                    };
+            //     if(string.IsNullOrEmpty(json))
+            //     {
+            //         Debug.LogWarning("Account file is empty or null, initializing new list.");
+            //         accounts = new List<Account>();
+            //     }
+            //     else
+            //     {
+            //         JsonSerializerSettings settings = new JsonSerializerSettings
+            //         {
+            //             Converters = new List<JsonConverter> { new ByteArrayConverter() }
+            //         };
 
-                    accounts = JsonConvert.DeserializeObject<List<Account>>(json, settings);
-                    if (accounts == null)
-                    {
-                        Debug.LogWarning("Deserialization resulted in null, initializing new list.");
-                        accounts = new List<Account>();
-                    }
-                    else
-                    {
-                        Debug.Log("Deserialization successful. Account count: " + accounts.Count);
+            //         accounts = JsonConvert.DeserializeObject<List<Account>>(json, settings);
+            //         if(accounts == null)
+            //         {
+            //             Debug.LogWarning("Deserialization resulted in null, initializing new list.");
+            //             accounts = new List<Account>();
+            //         }
+            //         else
+            //         {
+            //             Debug.Log("Deserialization successful. Account count: " + accounts.Count);
 
-                        // Debugging each account's salt
-                        foreach (var account in accounts)
-                        {
-                            string saltString = BitConverter.ToString(account.Salt).Replace("-", "").ToLowerInvariant();
-                            Debug.Log($"Username: {account.Username}, Salt: {saltString}");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Exception when reading the accounts file: " + ex.ToString());
-                accounts = new List<Account>();
-            }
+            //             // Debugging each account's salt
+            //             foreach (var account in accounts)
+            //             {
+            //                 string saltString = BitConverter.ToString(account.Salt).Replace("-", "").ToLowerInvariant();
+            //                 Debug.Log($"Username: {account.Username}, Salt: {saltString}");
+            //             }
+            //         }
+            //     }
+            // }
+            // catch (Exception ex)
+            // {
+            //     Debug.LogError("Exception when reading the accounts file: " + ex.ToString());
+            //     accounts = new List<Account>();
+            // }
         }
         else
         {
@@ -172,8 +173,6 @@ public class AccountManager
             accounts = new List<Account>();
         }
     }
-
-
 
     public void SaveAccountsToFile(string filePath)
     {
@@ -187,46 +186,50 @@ public class AccountManager
 
     public bool CreateAccount(string username, string password)
     {
-        if (accounts.Exists(acc => acc.Username == username))
+        if(accounts.Exists(acc => acc.Username == username))
         {
             return false; // Username already exists
         }
 
         accounts.Add(new Account(username, password, false));
 
-        SaveAccountsToFile(AccountManagerBehaviour.Instance.accountFilePath);
+        // SaveAccountsToFile(AccountManagerBehaviour.Instance.accountFilePath);
         return true;
     }
+
     public bool CreateAdminAccount()
     {
-        if (accounts.Exists(acc => acc.Username == "admin"))
+        if(accounts.Exists(acc => acc.Username == "admin"))
         {
             return false; // Username already exists
         }
 
         accounts.Add(new Account("admin", "password", true));
 
-        SaveAccountsToFile(AccountManagerBehaviour.Instance.accountFilePath);
+        // SaveAccountsToFile(AccountManagerBehaviour.Instance.accountFilePath);
         return true;
     }
+
     public bool Login(string username, string password)
     {
         Debug.Log($"Attempting login with Username: {username} Password: {password}");
         Account account = accounts.Find(acc => acc.Username == username);
         return account != null && account.VerifyPassword(password);
     }
+
     public bool IsAdmin(string username)
     {
         var account = accounts.Find(acc => acc.Username == username);
         return account != null && account.isAdmin;
     }
+
     public void ResetHighScore(string username)
     {
         var account = accounts.Find(acc => acc.Username == username);
-        if (account != null)
+        if(account != null)
         {
             account.HighScore = 0;
-            SaveAccountsToFile(AccountManagerBehaviour.Instance.accountFilePath); // Save the changes
+            // SaveAccountsToFile(AccountManagerBehaviour.Instance.accountFilePath); // Save the changes
             Debug.Log($"High score reset for user {username}.");
         }
         else
@@ -234,13 +237,14 @@ public class AccountManager
             Debug.LogError($"User {username} not found.");
         }
     }
+
     public void DeleteAccount(string username)
     {
         var account = accounts.Find(acc => acc.Username == username);
-        if (account != null)
+        if(account != null)
         {
             accounts.Remove(account);
-            SaveAccountsToFile(AccountManagerBehaviour.Instance.accountFilePath); // Save the changes
+            // SaveAccountsToFile(AccountManagerBehaviour.Instance.accountFilePath); // Save the changes
             Debug.Log($"Account for user {username} deleted.");
         }
         else
@@ -252,7 +256,7 @@ public class AccountManager
     public void UpdateHighScore(string username, int score)
     {
         Account account = accounts.Find(acc => acc.Username == username);
-        if (account != null && score > account.HighScore)
+        if(account != null && score > account.HighScore)
         {
             account.HighScore = score;
         }
@@ -282,7 +286,7 @@ public class ByteArrayConverter : JsonConverter
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
         string hex = (string)reader.Value;
-        if (string.IsNullOrEmpty(hex))
+        if(string.IsNullOrEmpty(hex))
         {
             throw new ArgumentException("Hex string cannot be null or empty.", nameof(reader.Value));
         }
@@ -291,7 +295,7 @@ public class ByteArrayConverter : JsonConverter
         {
             int numberChars = hex.Length;
             byte[] bytes = new byte[numberChars / 2];
-            for (int i = 0; i < numberChars; i += 2)
+            for(int i = 0; i < numberChars; i += 2)
             {
                 bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
             }
@@ -302,5 +306,4 @@ public class ByteArrayConverter : JsonConverter
             throw new JsonSerializationException("Invalid hex format", e);
         }
     }
-
 }

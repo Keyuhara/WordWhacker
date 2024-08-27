@@ -21,7 +21,7 @@ public class Leaderboard : MonoBehaviour
 
     public void PopulateLeaderboard()
     {
-        if (accountManagerBehaviour != null)
+        if(accountManagerBehaviour != null)
         {
             List<Account> sortedAccounts = accountManagerBehaviour.AccountManager.GetLeaderboard();
 
@@ -34,7 +34,7 @@ public class Leaderboard : MonoBehaviour
             // Instantiate a new entry prefab for each account in the sorted list
             foreach (var account in sortedAccounts)
             {
-                if (!AccountManagerBehaviour.Instance.AccountManager.IsAdmin(account.Username))
+                if(!AccountManagerBehaviour.Instance.AccountManager.IsAdmin(account.Username))
                 {
                     GameObject entry = Instantiate(accountEntryPrefab, transform);
                     // Assuming your prefab has two TextMeshProUGUI components named accordingly

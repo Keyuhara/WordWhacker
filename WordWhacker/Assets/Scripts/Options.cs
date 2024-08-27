@@ -21,12 +21,12 @@ public class Options : MonoBehaviour
         Resolutions.ClearOptions();
 
         List<string> options = new List<string>();
-        for (int i = 0; i < resolutions.Length; i++)
+        for(int i = 0; i < resolutions.Length; i++)
         {
             string option = Screen.width + " x " + Screen.height;
             options.Add(option);
 
-            if ((Screen.width == Screen.currentResolution.width) && (Screen.height == Screen.currentResolution.height))
+            if((Screen.width == Screen.currentResolution.width) && (Screen.height == Screen.currentResolution.height))
             {
                 currentResIndex = i;
             }

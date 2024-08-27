@@ -11,7 +11,7 @@ public class ButtonHoverSound : MonoBehaviour, IPointerEnterHandler, IPointerCli
     // Function to call when the mouse pointer enters the button area
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (audioSource != null && hoverSound != null)
+        if(audioSource != null && hoverSound != null)
         {
             audioSource.clip = hoverSound;
             audioSource.Stop(); // Ensure any currently playing sound is stopped
@@ -26,7 +26,7 @@ public class ButtonHoverSound : MonoBehaviour, IPointerEnterHandler, IPointerCli
     // Function to call when the button is clicked
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (audioSource != null && clickSound != null)
+        if(audioSource != null && clickSound != null)
         {
             audioSource.clip = clickSound;
             audioSource.Stop(); // Ensure any currently playing sound is stopped
