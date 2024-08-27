@@ -77,6 +77,8 @@ public class Menu : MonoBehaviour
         adminToolsPanel.SetActive(false);
 
         // Erase input text if any
+        usernameInput.text = "";
+        passwordInput.text = "";
         feedbackText.text = "";
     }
 

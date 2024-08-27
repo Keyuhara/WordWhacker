@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private float speed = 30.0f; // Speed at which the enemy moves
-    private Vector3 targetPosition = new Vector3(400, -430, 0); // Target position to move towards
+    private Vector3 targetPosition = new Vector3(Screen.width / 2, -100, 0); // Target position to move towards
 
     void Update()
     {
