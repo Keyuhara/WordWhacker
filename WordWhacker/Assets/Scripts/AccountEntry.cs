@@ -6,10 +6,8 @@ using UnityEngine.UI;
 
 public class AccountEntry : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject usernameText;
-    [SerializeField]
-    private GameObject highScoreText;
+    [SerializeField] private GameObject usernameText;
+    [SerializeField] private GameObject highScoreText;
 
     public void OnResetHighScoreButtonPressed()
     {
