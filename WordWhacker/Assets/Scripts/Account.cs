@@ -21,7 +21,9 @@ public class Account
     [JsonConstructor]
     public Account()
     {
+
     }
+    
     public Account(string username, string password, bool isA = false)
     {
         if (string.IsNullOrWhiteSpace(username))

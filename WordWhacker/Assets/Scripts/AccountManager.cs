@@ -8,6 +8,7 @@ public class AccountManagerBehaviour : MonoBehaviour
 
     public string accountFilePath;
     public string currentAccount;
+
     private void Awake()
     {
         if (Instance == null)
@@ -16,6 +17,7 @@ public class AccountManagerBehaviour : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             accountFilePath = Path.Combine(Application.persistentDataPath, "accounts.json");
+            Debug.Log("Account File Path: " + accountFilePath);
             AccountManager = new AccountManager();
             AccountManager.LoadAccountsFromFile(accountFilePath);
         }
