@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+// using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +18,7 @@ public class Account
 
     public bool isAdmin {  get; set; }
 
-    [JsonConstructor]
+    // [JsonConstructor]
     public Account()
     {
 
@@ -176,12 +176,12 @@ public class AccountManager
 
     public void SaveAccountsToFile(string filePath)
     {
-        string json = JsonConvert.SerializeObject(accounts, Formatting.Indented, new JsonSerializerSettings
-        {
-            Converters = new List<JsonConverter> { new ByteArrayConverter() }
-        });
-        Debug.Log("Saving data to: " + filePath);
-        File.WriteAllText(filePath, json);
+        // string json = JsonConvert.SerializeObject(accounts, Formatting.Indented, new JsonSerializerSettings
+        // {
+        //     Converters = new List<JsonConverter> { new ByteArrayConverter() }
+        // });
+        // Debug.Log("Saving data to: " + filePath);
+        // File.WriteAllText(filePath, json);
     }
 
     public bool CreateAccount(string username, string password)
@@ -270,40 +270,40 @@ public class AccountManager
 }
 
 // A JSON converter for byte arrays
-public class ByteArrayConverter : JsonConverter
-{
-    public override bool CanConvert(Type objectType)
-    {
-        return objectType == typeof(byte[]);
-    }
+// public class ByteArrayConverter : JsonConverter
+// {
+//     public override bool CanConvert(Type objectType)
+//     {
+//         return objectType == typeof(byte[]);
+//     }
 
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    {
-        byte[] bytes = (byte[])value;
-        writer.WriteValue(BitConverter.ToString(bytes).Replace("-", "").ToLowerInvariant());
-    }
+//     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+//     {
+//         byte[] bytes = (byte[])value;
+//         writer.WriteValue(BitConverter.ToString(bytes).Replace("-", "").ToLowerInvariant());
+//     }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-    {
-        string hex = (string)reader.Value;
-        if(string.IsNullOrEmpty(hex))
-        {
-            throw new ArgumentException("Hex string cannot be null or empty.", nameof(reader.Value));
-        }
+//     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+//     {
+//         string hex = (string)reader.Value;
+//         if(string.IsNullOrEmpty(hex))
+//         {
+//             throw new ArgumentException("Hex string cannot be null or empty.", nameof(reader.Value));
+//         }
 
-        try
-        {
-            int numberChars = hex.Length;
-            byte[] bytes = new byte[numberChars / 2];
-            for(int i = 0; i < numberChars; i += 2)
-            {
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-            }
-            return bytes;
-        }
-        catch (FormatException e)
-        {
-            throw new JsonSerializationException("Invalid hex format", e);
-        }
-    }
-}
+//         try
+//         {
+//             int numberChars = hex.Length;
+//             byte[] bytes = new byte[numberChars / 2];
+//             for(int i = 0; i < numberChars; i += 2)
+//             {
+//                 bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+//             }
+//             return bytes;
+//         }
+//         catch (FormatException e)
+//         {
+//             throw new JsonSerializationException("Invalid hex format", e);
+//         }
+//     }
+// }
