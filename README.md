@@ -1,2 +1,2 @@
 # WordWhacker
-Source Code of Final Prototype for Game Development course
+Source Code of Final Prototype for Software Engineering course
